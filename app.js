@@ -85,22 +85,41 @@ function findPersonFamily(person, people) {
     let family = { spouse: "", parents: "", siblings: "" };
     family.spouse = `Spouse: ${result.currentSpouse || "None"}`;
     family.parents = `Parents: ${
-        result.parents.length > 0 ? [...result.parents] : "None"
+    result.parents.length > 0 ? [...result.parents] : "None"
     }`;
     family.siblings = `Siblings: ${
-        result.siblings.length > 0 ? [...result.siblings] : "None"
+    result.siblings.length > 0 ? [...result.siblings] : "None"
     }`;
     return family;
 }
 alert(findPersonFamily)
-console.log(findPersonFamily)  
-break;
+console.log(findPersonFamily) 
+break; 
 
         case "descendants":
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
-            alert(personDescendants);
+            
+function findPersonDescendants(person,people){
+    let descendants = [];
+
+    descendants = people.filter(function(el){
+        if (el.parents.length === 0) {
+            return false
+        }
+        else if (el.parents[0] === person.id || el.parents[1] === person.id) {
+            return true;
+        }
+    
+    return descendants;
+
+    });
+
+}
+findPersonDescendants()
+
+    let personDescendants = findPersonDescendants(person[0], people,id);
+            alert(findPersonDescendants);
             break;
         case "restart":
             // Restart app() from the very beginning
@@ -112,8 +131,8 @@ break;
         default:
             // Prompt user again. Another instance of recursion
             return mainMenu(person, people);
-    }
-}
+}}
+
 // End of mainMenu()
 
 /**
