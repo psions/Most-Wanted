@@ -65,22 +65,32 @@ function mainMenu(person, people) {
         case "info":
             //! TODO: Declare a findPersonInfo function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
-    function searchByPerson(people){
-        let personInfo = person.find({people});
-        return personInfo;
-    }
-    let person = searchByPerson()
-    console.log(person);
-
+    function findPersonInfo(){
+        let personInfo = person.find(function(el){
+            return el;
+    });
+}        
+findPersonInfo();
+   
+    
     let personInfo = findPersonInfo(person[0]);
     alert(personInfo);
     break;
         case "family":
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
-            break;
+
+function findPersonFamily(){
+    let personFamily = findPersonFamily(person[0], people);
+
+    let findPersonFamily = personFamily.filter(function(el){
+        return(el.parents && el.currentSpouse);
+        alert(personFamily);
+        break;
+    })
+}
+console.log(personFamily)  
+
         case "descendants":
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
