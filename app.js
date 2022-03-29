@@ -80,16 +80,21 @@ findPersonInfo();
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
 
-function findPersonFamily(){
-    let personFamily = findPersonFamily(person[0], people);
-
-    let findPersonFamily = personFamily.filter(function(el){
-        return(el.parents && el.currentSpouse);
-        alert(personFamily);
-        break;
-    })
+function findPersonFamily(person, people) {
+    let result = findPersonRelatives(person, people);
+    let family = { spouse: "", parents: "", siblings: "" };
+    family.spouse = `Spouse: ${result.currentSpouse || "None"}`;
+    family.parents = `Parents: ${
+        result.parents.length > 0 ? [...result.parents] : "None"
+    }`;
+    family.siblings = `Siblings: ${
+        result.siblings.length > 0 ? [...result.siblings] : "None"
+    }`;
+    return family;
 }
-console.log(personFamily)  
+alert(findPersonFamily)
+console.log(findPersonFamily)  
+break;
 
         case "descendants":
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
