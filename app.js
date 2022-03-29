@@ -65,9 +65,16 @@ function mainMenu(person, people) {
         case "info":
             //! TODO: Declare a findPersonInfo function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
-            let personInfo = findPersonInfo(person[0]);
-            alert(personInfo);
-            break;
+    function searchByPerson(people){
+        let personInfo = person.find({people});
+        return personInfo;
+    }
+    let person = searchByPerson()
+    console.log(person);
+
+    let personInfo = findPersonInfo(person[0]);
+    alert(personInfo);
+    break;
         case "family":
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
