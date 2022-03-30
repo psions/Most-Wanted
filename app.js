@@ -204,9 +204,9 @@ function personInfo(person){
 
 
 function findPersonDescendants(person, people, children =[], id){
-    let personDescendants = people.filter((item) => {
-        if(item.parents.includes(person.id)) {
-            children.push(item);
+    let personDescendants = people.filter((data) => {
+        if(data.parents.includes(person.id)) {
+            children.push(data);
             return true;
         }
     })
@@ -221,3 +221,29 @@ function findPersonDescendants(person, people, children =[], id){
     let findDescendants = findPersonDescendants();
     alert('Person Descendants: ', findDescendants);
 console.log(findDescendants);
+
+function getSiblings(person, people){
+    let siblings = people.filter(data); {
+        for (let siblings = 0; siblings.parents.length; siblings ++){
+            if(data.parents.includes(person.parents[siblings])){
+                return true;
+            }
+        }
+    }
+    return siblings;
+}
+
+function getSpouse(person,people){
+    let spouse = people.filter(data)
+    
+    if(person.currentSpouse === data.id){
+        return true;
+    }
+
+    if(spouse.length === 0){
+        alert(`${person.firstName} is single. `)
+    }   else{
+            alert(`${person.firstName} is married to ${spouse[0][`firstName`]} ${spouse[0][`lastName`]}. `)
+    }
+    return spouse;
+}
