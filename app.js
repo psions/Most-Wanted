@@ -56,7 +56,7 @@ function mainMenu(person, people) {
         alert("Could not find that individual.");
         // Restarts app() from the very beginning
         return app(people);
-    }
+    }}
     let displayOption = prompt(
         `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
@@ -65,14 +65,14 @@ function mainMenu(person, people) {
         case "info":
             //! TODO: Declare a findPersonInfo function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
+    
     function findPersonInfo(){
         let personInfo = person.find(function(el){
             return el;
     });
+    return personInfo;
 }        
-findPersonInfo();
-   
-    
+
     let personInfo = findPersonInfo(person[0]);
     alert(personInfo);
     break;
@@ -137,6 +137,7 @@ let findDescendants = findPersonDescendants();
 alert('Person Descendants: ', findDescendants);
 console.log(findDescendants);
 break;
+}
 
 // End of mainMenu()
 
@@ -229,3 +230,6 @@ function chars(input) {
 
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+
+
