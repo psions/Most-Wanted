@@ -56,88 +56,41 @@ function mainMenu(person, people) {
         alert("Could not find that individual.");
         // Restarts app() from the very beginning
         return app(people);
-    }}
-    let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
+    }
+    let displayOption = prompt( `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
     );
     // Routes our application based on the user's input
-    switch (displayOption) {
+    switch (displayOption){
         case "info":
-            //! TODO: Declare a findPersonInfo function //////////////////////////////////////////
-            // HINT: Look for a person-object stringifier utility function to help
-    
-    function findPersonInfo(){
-        let personInfo = person.find(function(el){
-            return el;
-    });
-    return personInfo;
-}        
-
-    let personInfo = findPersonInfo(person[0]);
-    alert(personInfo);
-    break;
+        personInfo(person);
+        mainMenu(person,people);
+        break;
+               
         case "family":
-            //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
-            // HINT: Look for a people-collection stringifier utility function to help
-
-// function findPersonFamily(person, people) {
-//     let result = findPersonRelatives(person, people);
-//     let family = { spouse: "", parents: "", siblings: "" };
-//     family.spouse = `Spouse: ${result.currentSpouse || "None"}`;
-//     family.parents = `Parents: ${
-//         result.parents.length > 0 ? [...result.parents] : "None"
-//     }`;
-//     family.siblings = `Siblings: ${
-//         result.siblings.length > 0 ? [...result.siblings] : "None"
-//     }`;
-//     return family;
-// }
-// alert(findPersonFamily)
-// console.log(findPersonFamily)  
-// break;
-
-function findPersonFamily(){
-    let result = data.map(function(el){
-        return el.firstName && el.lastName;
-
-    })
-    return result;
-}
-let findPerson = findPersonFamily();
-alert('Person Family: ', findPerson);
-console.log(findPerson);
-break;
+        getSpouse(person,people);
+        getParents(person,people);
+        let siblings = getSiblings(person,people);
+        if(siblings.length !==0 ? displaySiblings(siblings): 
+        alert(`${person.firstName} has no siblings`));
+        mainMenu(person,people);
+        break;
 
         case "descendants":
-            //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
-            // HINT: Review recursion lecture + demo for bonus user story
-            
-//             let personDescendants = findPersonDescendants(person[0], people);
-//             alert(personDescendants);
-//             break;
-//         case "restart":
-//             // Restart app() from the very beginning
-//             app(people);
-//             break;
-//         case "quit":
-//             // Stop application execution
-//             return;
-//         default:
-//             // Prompt user again. Another instance of recursion
-//             return mainMenu(person, people);
-//     }
-// }
-function findPersonDescendants(){
-    let personDescendants = data.map(function(el){
-        return el.parents;
-    })
-    return personDescendants;
-}
-let findDescendants = findPersonDescendants();
-alert('Person Descendants: ', findDescendants);
-console.log(findDescendants);
-break;
-}
+        let parent_descendants = findPersonDescendants(person,people);
+        if (parent_descendants.length !==0 ? displayPeople(parent_descendants):
+        alert(`${person.firstName} has no descendants`));
+        mainMenu(person,people);
+        break;
+
+}}
+
+
+
+       
+    
+
+
+
 
 // End of mainMenu()
 
@@ -183,12 +136,12 @@ function displayPeople(people) {
  * in order to easily send the information to the user in the form of an alert().
  * @param {Object} person       A singular object.
  */
-function displayPerson(person) {
-    let personInfo = `First Name: ${person.firstName}\n`;
-    personInfo += `Last Name: ${person.lastName}\n`;
-    //! TODO: finish getting the rest of the information to display //////////////////////////////////////////
-    alert(personInfo);
+function displayPeople(people){
+    alert(people.map(function(person){
+      return person.firstName + " " + person.lastName + "\n";
+    }).join("\n"));
 }
+
 // End of displayPerson()
 
 /**
@@ -233,3 +186,38 @@ function chars(input) {
 
 
 
+
+
+function personInfo(person){
+    let personInfo = 'firstName: ' + person.firstName + '\n' 
+    personInfo+= 'lastName: ' + person.lastName + '\n'
+    personInfo += 'gender: ' + person.gender + '\n' 
+    personInfo += 'dob: ' + person.dob + '\n' 
+    personInfo += 'height: ' + person.height + '\n'
+    personInfo += 'weight: ' + person.weight + '\n' 
+    personInfo += 'eyeColor: ' + person.eyeColor + '\n'
+    personInfo += 'occupation: ' + person.occupation + '\n'
+    personInfo += 'spouse: ' + person.currentSpouse + '\n'
+    personInfo += 'parents: ' + person.parents
+    alert(personInfo);
+}
+
+
+function findPersonDescendants(person, people, children =[], id){
+    let personDescendants = people.filter((item) => {
+        if(item.parents.includes(person.id)) {
+            children.push(item);
+            return true;
+        }
+    })
+
+        for (let child = id; child < children.length; child ++){
+            return findPersonDescendants(children[child],people, children, child +1)
+        }
+
+
+    return personDescendants;
+}
+    let findDescendants = findPersonDescendants();
+    alert('Person Descendants: ', findDescendants);
+console.log(findDescendants);
