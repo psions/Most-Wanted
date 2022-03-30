@@ -80,40 +80,64 @@ findPersonInfo();
             //! TODO: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
 
-function findPersonFamily(person, people) {
-    let result = findPersonRelatives(person, people);
-    let family = { spouse: "", parents: "", siblings: "" };
-    family.spouse = `Spouse: ${result.currentSpouse || "None"}`;
-    family.parents = `Parents: ${
-        result.parents.length > 0 ? [...result.parents] : "None"
-    }`;
-    family.siblings = `Siblings: ${
-        result.siblings.length > 0 ? [...result.siblings] : "None"
-    }`;
-    return family;
+// function findPersonFamily(person, people) {
+//     let result = findPersonRelatives(person, people);
+//     let family = { spouse: "", parents: "", siblings: "" };
+//     family.spouse = `Spouse: ${result.currentSpouse || "None"}`;
+//     family.parents = `Parents: ${
+//         result.parents.length > 0 ? [...result.parents] : "None"
+//     }`;
+//     family.siblings = `Siblings: ${
+//         result.siblings.length > 0 ? [...result.siblings] : "None"
+//     }`;
+//     return family;
+// }
+// alert(findPersonFamily)
+// console.log(findPersonFamily)  
+// break;
+
+function findPersonFamily(){
+    let result = data.map(function(el){
+        return el.firstName && el.lastName;
+
+    })
+    return result;
 }
-alert(findPersonFamily)
-console.log(findPersonFamily)  
+let findPerson = findPersonFamily();
+alert('Person Family: ', findPerson);
+console.log(findPerson);
 break;
 
         case "descendants":
             //! TODO: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
-            alert(personDescendants);
-            break;
-        case "restart":
-            // Restart app() from the very beginning
-            app(people);
-            break;
-        case "quit":
-            // Stop application execution
-            return;
-        default:
-            // Prompt user again. Another instance of recursion
-            return mainMenu(person, people);
-    }
+            
+//             let personDescendants = findPersonDescendants(person[0], people);
+//             alert(personDescendants);
+//             break;
+//         case "restart":
+//             // Restart app() from the very beginning
+//             app(people);
+//             break;
+//         case "quit":
+//             // Stop application execution
+//             return;
+//         default:
+//             // Prompt user again. Another instance of recursion
+//             return mainMenu(person, people);
+//     }
+// }
+function findPersonDescendants(){
+    let personDescendants = data.map(function(el){
+        return el.parents;
+    })
+    return personDescendants;
 }
+let findDescendants = findPersonDescendants();
+alert('Person Descendants: ', findDescendants);
+console.log(findDescendants);
+break;
+
 // End of mainMenu()
 
 /**
