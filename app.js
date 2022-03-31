@@ -284,3 +284,22 @@ function getParents(person, people) {
   return array;
 }
 
+function searchByGender(people){
+  let userInputGender = prompt("What is the person's gender?");
+  let array = people.filter(function (el) {
+    if(el.gender == userInputGender) {
+      return true;
+    }
+  });
+  return array;
+  }
+
+  function searchByAge(people){
+    let userInputGender = prompt("What is the person's gender?");
+    let array = people.filter(function (el) {
+      if(el.gender == userInputGender) {
+        return true;
+      }
+    });
+    return array;
+    }
