@@ -202,9 +202,9 @@ function personInfo(person) {
 }
 
 function findPersonDescendants(person, people, children = [], id) {
-  let personDescendants = people.filter((data) => {
-    if (data.parents.includes(person.id)) {
-      children.push(data);
+  let personDescendants = people.filter((item) => {
+    if (item.parents.includes(person.id)) {
+      children.push(item);
       return true;
     }
   });
@@ -214,16 +214,14 @@ function findPersonDescendants(person, people, children = [], id) {
   }
 
   return personDescendants;
-  let findDescendants = findPersonDescendants();
-  alert("Person Descendants: ", findDescendants);
-  console.log(findDescendants);
+
 }
 
 function getSiblings(person, people) {
-  let siblings = people.filter(data);
+  let siblings = people.filter(possibleSibling);
   {
     for (let siblings = 0; siblings.parents.length; siblings++) {
-      if (data.parents.includes(person.parents[siblings])) {
+      if (possibleSibling.parents.includes(person.parents[siblings])) {
         return true;
       }
     }
@@ -232,9 +230,9 @@ function getSiblings(person, people) {
 }
 
 function getSpouse(person, people) {
-  let spouse = people.filter(data);
+  let spouse = people.filter(possibleSpouse);
 
-  if (person.currentSpouse === data.id) {
+  if (person.currentSpouse === possibleSpouse.id) {
     return true;
   }
 
