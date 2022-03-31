@@ -292,14 +292,104 @@ function searchByGender(people){
     }
   });
   return array;
-  }
+}
 
-  function searchByAge(people){
-    let userInputGender = prompt("What is the person's gender?");
-    let array = people.filter(function (el) {
-      if(el.gender == userInputGender) {
-        return true;
-      }
-    });
-    return array;
+function searchByAge(people){
+  let userInputAge = prompt("What is the person's age?");
+  let array = people.filter(function (el) {
+    if(el.age == userInputAge) {
+      return true;
     }
+  });
+  return array;
+}
+
+function searchByHeight(people){
+  let userInputHeight = prompt("What is the person's height?");
+  let array = people.filter(function (el) {
+    if(el.height == userInputHeight) {
+      return true;
+    }
+  });
+  return array;
+}
+
+function searchByWeight(people){
+  let userInputWeight = prompt("What is the person's weight?");
+  let array = people.filter(function (el) {
+    if(el.weight == userInputWeight) {
+      return true;
+    }
+  });
+  return array;
+}
+
+function searchByEyeColor(people){
+  let userInputEyeColor = prompt("What is the person's eye color?");
+  let array = people.filter(function (el) {
+    if(el.eyeColor == userInputEyeColor) {
+      return true;
+    }
+  });
+  return array;
+}
+
+function searchByOccupation(people){
+  let userInputOccupation = prompt("What is the person's occupation?");
+  let array = people.filter(function (el) {
+    if(el.occupation == userInputOccupation) {
+      return true;
+    }
+  });
+  return array;
+}
+
+function searchByTraits(people){
+  let userSearchChoice = prompt("You can seach by 'gender', 'age', 'height', 'weight', 'eye color', 'occupation'. ").toLowerCase
+  let filteredPeople;
+  let foundPerson;
+  switch(userSearchChoice){
+    case "gender":
+      filteredPeople = searchByGender(people)
+      alert(displayPeople(filteredPeople))
+      break;
+    
+    case  "age":
+      filteredPeople = searchByAge(people)
+      alert(displayPeople(filteredPeople))
+      break;
+    
+    case "height":
+      filteredPeople = searchByHeight(people)
+      alert(displayPeople(filteredPeople))
+      break;
+
+    case "weight":
+      filteredPeople = searchByWeight
+      alert(displayPeople(filteredPeople))
+      break;
+
+    case "eye color":
+      filteredPeople = searchByEyeColor
+      alert(displayPeople(filteredPeople))
+      break;
+
+    case "occupation":
+      filteredPeople = searchByOccupation
+      alert(displayPeople(filteredPeople))
+      break;
+  }   
+
+  userSearchChoice = prompt("Do you want to filter more?")
+  if(userSearchChoice === "yes"){
+    searchByTraits(filteredPeople, people);
+  }
+  if(userSearchChoice === "no" && filteredPeople.length === 1){
+    foundPerson = filteredPeople[0]
+    mainMenu(foundPerson,people)
+  }
+  if (userSearchChoice === "no" && filteredPeople.length > 1){
+    alert("This is your search result: \n" + displayPeople(filteredPeople))
+    app(people)
+  }
+}
