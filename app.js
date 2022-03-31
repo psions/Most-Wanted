@@ -61,33 +61,30 @@ function mainMenu(person, people) {
     `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
   );
   // Routes our application based on the user's input
-  switch (displayOption) {
+  
+  
+  
+  switch(displayOption){
     case "info":
-      personInfo(person);
+      alert(("The following is " + person.firstName + " " + person.lastName + "'s personal info: \n\n" + displayPerson(person)));
       mainMenu(person, people);
       break;
-
     case "family":
-      getSpouse(person, people);
-      getParents(person, people);
-      let siblings = getSiblings(person, people);
-      if (
-        siblings.length !== 0
-          ? displaySiblings(siblings)
-          : alert(`${person.firstName} has no siblings`)
-      );
+      alert("The following are " + person.firstName + " " + person.lastName + "'s family members: \n\n" + displayPeople(getFamily(person, people)));
       mainMenu(person, people);
       break;
-
     case "descendants":
-      let parent_descendants = findPersonDescendants(person, people);
-      if (
-        parent_descendants.length !== 0
-          ? displayPeople(parent_descendants)
-          : alert(`${person.firstName} has no descendants`)
-      );
+      alert("The following are " + person.firstName + " " + person.lastName + "'s descendants: \n\n" + displayPeople(getDescendants(person, people)));
       mainMenu(person, people);
       break;
+    case "restart":
+      app(people);
+      break;
+    case "quit":
+      return;
+    default:
+      alert("invalid input");
+      mainMenu(person, people);
   }
 }
 
@@ -104,7 +101,7 @@ function searchByName(people) {
   let lastName = promptFor("What is the person's last name?", chars);
 
   // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
-  let foundPerson = people.filter(function (person) {
+  let foundPerson = people.filter(function(person) {
     if (person.firstName === firstName && person.lastName === lastName) {
       return true;
     }
@@ -187,7 +184,7 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
-function personInfo(person) {
+function displayPerson(person) {
   let personInfo = "firstName: " + person.firstName + "\n";
   personInfo += "lastName: " + person.lastName + "\n";
   personInfo += "gender: " + person.gender + "\n";
@@ -201,73 +198,77 @@ function personInfo(person) {
   alert(personInfo);
 }
 
-function findPersonDescendants(person, people, children = [], id) {
-  let personDescendants = people.filter((item) => {
-    if (item.parents.includes(person.id)) {
-      children.push(item);
-      return true;
-    }
-  });
 
-  for (let child = id; child < children.length; child++) {
-    return findPersonDescendants(children[child], people, children, child + 1);
+function getFamily (person, people) {
+  let array = [];
+  let siblings = getSiblings(person, people);
+  let children = getChildren(person, people);
+  let spouse = getSpouse(person, people);
+  let parents = getParents(person, people);
+
+  if (siblings != null) {
+    for(let i = 0; i < siblings.length; i ++){
+      array.push(siblings[i]);
+    }
   }
 
-  return personDescendants;
+  if (children != null) {
+    for(let i = 0; i < children.length; i ++){
+      array.push(children[i]);
+      }
+    }
 
+  if (spouse != null) {
+    for(let i = 0; i < spouse.length; i ++){
+    array.push(spouse[i]);
+    }
+  }
+
+  if (parents != null) {
+    for(let i = 0; i < parents.length; i ++) {
+      array.push(parents[i]);
+    }
+  }
+
+  return array;
+}
+
+function getDescendants(person, people) {
+  let descendants = getChildren(person, people);
+  for(let i = 0; i < descendants.length; i++) {
+    descendants = descendants.concat(getDescendants(descendants[i], people));
+  }
+  return descendants;
 }
 
 function getSiblings(person, people) {
-  let siblings = people.filter(possibleSibling);
-  {
-    for (let siblings = 0; siblings.parents.length; siblings++) {
-      if (possibleSibling.parents.includes(person.parents[siblings])) {
+  let array = people.filter(function (el) {
+    for (let i = 0; i < (el.parents).length; i++) {
+      if(person == el) {
+        return false;
+      };
+      if(person.parents.includes(el.parents[i]) ) {
         return true;
-      }
-    }
-  }
-  return siblings;
+    };
+  };
+  });
+  return array[0];
 }
 
-function getSpouse(person, people) {
-  let spouse = people.filter(possibleSpouse);
-
-  if (person.currentSpouse === possibleSpouse.id) {
-    return true;
-  }
-
-  if (spouse.length === 0) {
-    alert(`${person.firstName} is single. `);
-  } else {
-    alert(
-      `${person.firstName} is married to ${spouse[0][`firstName`]} ${
-        spouse[0][`lastName`]
-      }. `
-    );
-  }
-  return spouse;
-}
-
-
-
-
-function getParents(person, people) {
-  let parents = [];
-
-  let parent = people.filter((possibleParent) => {
-    if (person.parents.includes(possibleParent.id)) {
-      parents.push(parent);
+function getSpouse(person,people){
+  let array = people.filter(function(el){
+    if (el.currentSpouse === person.id){
       return true;
     }
-    if (parents.length === 0) {
-      alert(`${person.firstName} has no parents`);
-    } else {
-      let family = ``;
-      for (let parent = 0; parent < parents.length; parent++) {
-        family += `${parents[parent].firstName}, ${parents[parent].lastName}`;
+  })
+  return array
+}
 
-        alert(`Parents: ${family}`);
+function getParents(person, people) {
+  let array = people.filter(function(el) {
+      if((person.parents).includes(el.id)) {
+        return true;
       }
-    }
   });
+  return array;
 }
