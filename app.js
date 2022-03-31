@@ -66,16 +66,18 @@ function mainMenu(person, people) {
   
   switch(displayOption){
     case "info":
-      alert(("The following is " + person.firstName + " " + person.lastName + "'s personal info: \n\n" + displayPerson(person)));
-      mainMenu(person, people);
+      alert(("The following is " + person[0].firstName + " " + person[0].lastName + "'s personal info: \n\n" + displayPerson(person[0])));
+      mainMenu(person[0], people);
       break;
     case "family":
-      alert("The following are " + person.firstName + " " + person.lastName + "'s family members: \n\n" + displayPeople(getFamily(person, people)));
-      mainMenu(person, people);
+      alert("The following are " + person[0].firstName + " " + person[0].lastName + "'s family members: \n\n" + displayPeople(getFamily(person[0], people)));
+      mainMenu(person[0], people);
       break;
     case "descendants":
-      alert("The following are " + person.firstName + " " + person.lastName + "'s descendants: \n\n" + displayPeople(getDescendants(person, people)));
-      mainMenu(person, people);
+      alert("The following are " + person[0].firstName + " " + person[0].lastName + "'s descendants: \n\n" + displayPeople(getDescendants(person[0], people)));
+      mainMenu(person[0], people);
+      // let descendantsArray = getDescendants(person[0], people)
+      // console.log(descendantsArray)
       break;
     case "restart":
       app(people);
@@ -84,7 +86,7 @@ function mainMenu(person, people) {
       return;
     default:
       alert("invalid input");
-      mainMenu(person, people);
+      mainMenu(person[0], people);
   }
 }
 
@@ -117,7 +119,7 @@ function searchByName(people) {
  * @param {Array} people        A collection of person objects.
  */
 function displayPeople(people) {
-  alert(
+  return(
     people
       .map(function (person) {
         return `${person.firstName} ${person.lastName}`;
@@ -132,15 +134,15 @@ function displayPeople(people) {
  * in order to easily send the information to the user in the form of an alert().
  * @param {Object} person       A singular object.
  */
-function displayPeople(people) {
-  alert(
-    people
-      .map(function (person) {
-        return person.firstName + " " + person.lastName + "\n";
-      })
-      .join("\n")
-  );
-}
+// function displayPeople(people) {
+//   alert(
+//     people
+//       .map(function (person) {
+//         return person.firstName + " " + person.lastName + "\n";
+//       })
+//       .join("\n")
+//   );
+// }
 
 // End of displayPerson()
 
@@ -195,14 +197,15 @@ function displayPerson(person) {
   personInfo += "occupation: " + person.occupation + "\n";
   personInfo += "spouse: " + person.currentSpouse + "\n";
   personInfo += "parents: " + person.parents;
-  alert(personInfo);
+  return(personInfo);
 }
+
 
 
 function getFamily (person, people) {
   let array = [];
   let siblings = getSiblings(person, people);
-  let children = getChildren(person, people);
+  let descendants = getDescendants(person, people);
   let spouse = getSpouse(person, people);
   let parents = getParents(person, people);
 
@@ -212,9 +215,9 @@ function getFamily (person, people) {
     }
   }
 
-  if (children != null) {
-    for(let i = 0; i < children.length; i ++){
-      array.push(children[i]);
+  if (descendants != null) {
+    for(let i = 0; i < descendants.length; i ++){
+      array.push(descendants[i]);
       }
     }
 
@@ -234,7 +237,15 @@ function getFamily (person, people) {
 }
 
 function getDescendants(person, people) {
-  let descendants = getChildren(person, people);
+  // Base case
+  let descendants = people.filter(function(el){
+    if(el.parents.includes(person.id)) return true;
+  });
+
+  if(descendants.length === 0) return descendants
+  
+
+  // Recursive Case
   for(let i = 0; i < descendants.length; i++) {
     descendants = descendants.concat(getDescendants(descendants[i], people));
   }
@@ -242,12 +253,12 @@ function getDescendants(person, people) {
 }
 
 function getSiblings(person, people) {
-  let array = people.filter(function (el) {
+  let array = people.filter(function(el) {
     for (let i = 0; i < (el.parents).length; i++) {
       if(person == el) {
         return false;
       };
-      if(person.parents.includes(el.parents[i]) ) {
+      if(person.includes(el.parents[i])){
         return true;
     };
   };
@@ -272,3 +283,4 @@ function getParents(person, people) {
   });
   return array;
 }
+
