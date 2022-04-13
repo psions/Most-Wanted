@@ -30,7 +30,7 @@ function app(people) {
       break;
     case "no":
       //! TODO: Declare a searchByTrait function //////////////////////////////////////////
-      searchResults = searchByTrait(people);
+      searchResults = searchByTraits(people);
       break;
     default:
       // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -258,7 +258,7 @@ function getSiblings(person, people) {
       if(person == el) {
         return false;
       };
-      if(person.includes(el.parents[i])){
+      if(person.parents.includes(el.parents[i])){
         return true;
     };
   };
